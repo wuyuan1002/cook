@@ -1,19 +1,12 @@
 
-CFLAGS = -O2 -Wall -W -std=c99
+default: all
 
-LIB_OBJS =
-
-COOK_OBJS =
-COOK_OBJS += main.o
-
-
-all: cook
-
-cook: $(COOK_OBJS) $(LIB_OBJS)
-	$(QUIET_LINK) $(CC) $(CFLAGS) -o $@ $(filter %.o, $^)
-
-.c.o:
-	$(CC) $(CFLAGS) -c $<
+.DEFAULT:
+	make clean
+	cd src && $(MAKE) $@
 
 clean:
-	rm -f *.o cook
+	find . -type d -name 'build' -exec rm -rf {} +
+	find . -type f -name 'cookserver' -exec rm -r {} \;
+
+.PHONY: clean
